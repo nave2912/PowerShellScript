@@ -1,0 +1,1 @@
+﻿Get-Service | where {$_.displayname -Match "win"}
