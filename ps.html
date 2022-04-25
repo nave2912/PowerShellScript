@@ -1,0 +1,156 @@
+commands usng in ps is called as cmdlets.
+PsSnapin - collection of commands provided by microsoft and it has built on .net.
+Module - collection of commands and it's created for user to directly user.Modules are visible in ps ISE.
+
+1.File Handling :
+New-Item
+Get-ItemProperty "filePath"
+Get-ItemProperty "filepath" | Select-Object *
+Set-ItemProperty "filePath" -Name "Property key what you get in get-itemproprty" "value"
+get-content
+set-content "fileName" "content"
+copy or cp
+mv
+rm
+
+get-alias
+set-alias "alias_name" "exe or any command"
+get-help
+Get-Date
+
+2. Service/process
+
+Get-Service
+Start-Service
+Stop-Service
+
+Get-Process -Name <firefox>
+Start-Process  
+Stop-Process -Name <firefox>
+or
+Stop-Process -Id <Id>
+
+
+3. variables
+
+$name=naveen
+
+$name.gettype()
+
+write-Host $name.gettype() --> like println
+
+$name = Read-Host "please enter your name"
+Read-Host --> like get input from user
+
+4.Array
+
+$a="naveen",28,"chennai"
+$a[0]="kumar"  --> first index value changed
+write-host "first value" $a[0]
+write-host "second value" $a[1]
+write-host "thirdvalue" $a[2]
+
+//removing specific value in array
+$b=$a| where {$_ -ne "chennai"} or $b=$a| where {$_ -ne $a[2]}
+
+write-Host "after removed chennai" $b
+
+Result : after removed chennai kumar 28
+
+
+How to use like command in ps ?
+
+Get-Service | where {$_.Name -Match "App"}
+
+5.Hash Table
+it is key value.
+
+$details = @{name="naveen"; age= 29}
+$details.name = "kumar"
+Write-Host $details.name $details.age
+
+6.Arithmetic operations 
+$num1=10
+$num2=20
+$sub = $num1-$num2
+$add= $num1+$num2
+write-host $sub
+Write-Host $add
+
+//int * string not work
+// string * int only working [it's multiple the string 10 times]
+$num3="naveen"
+$num4=10
+$num3*$num4
+
+result : naveennaveennaveennaveennaveennaveennaveennaveennaveennaveen
+
+
+7.user creation
+
+net user "naveen" "Welcome@123" /add
+ 
+8.share creation
+
+net share shareName=<folder path> /grant:everyone:full
+
+9.regular expression
+
+-Match vs -cmatch
+
+-Match --> match only values and it's not match case sensitive
+-cmatch --> match values with case sensitive
+
+For example :
+
+"Naveen" -Match "nav"  --> return true
+"Naveen" -cmatch "nav"  --> return false
+
+"Naveen" -cmatch "\D"  --> return true
+(it's verifying if provided value is String)
+12345 -cmatch "\d" --> return true
+(it's verifying if provided value is integer)
+123 45 -cmatch "\s" --> return true
+(it's verifying if provided value contains space)
+123$%^*45 -cmatch "\w" --> return true
+(it's verifying if provided value contains special character)
+"n1" -cmatch "\D\d" --> return true
+"n1" -cmatch "\d\D" --> return false
+
+
+192.168.10.0 -cmatch "\d\d\d.\d\d\d.\d\d.\d"
+
+or 
+
+192.168.10.0 -cmatch "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+
+10.if condition
+
+if("Naveen" -cmatch "\D"){
+write-Host ""
+}
+else if("Naveen" -cmatch "\d")
+{
+write-Host ""
+}
+else{
+write-Host ""
+}
+
+11. replace
+
+"naveen" -replace "kumar"
+
+12.send mail
+
+Send-MaiMessage -From <from email> -To <to email> -Body <content> -SmtpServer <server> useSSL -Attachment <>
+
+13.Log File
+
+Get-EventLog system
+
+or 
+Get-EventLog system -newest 3  --> list new 3 files
+
+or 
+Get-EventLog system -newest 3 | Format-List >> C:\logfoldwer\log.txt  --> write log into new file
